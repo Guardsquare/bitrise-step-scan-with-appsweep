@@ -1,7 +1,9 @@
 #!/bin/bash
-set -ex
+set -exo pipefail
 
 export APPSWEEP_API_KEY=${appsweep_api_key}
+export IOS_ARCHIVE_PATH=${ios_archive_path}
+export IOS_DSYMS_DIR_PATH=${ios_dsyms_dir_path}
 
 if [ -z "$APPSWEEP_API_KEY" ]
 then
@@ -9,6 +11,32 @@ then
 	exit 1
 fi
 
+# iOS
+if [ -e  "$IOS_ARCHIVE_PATH" ]; then
+	if [ -e  "$IOS_ARCHIVE_PATH" ]; then
+		APPSWEEP_CLI_DIR=$(mktemp -d)
+		curl --retry 3 \
+			--retry-max-time 120 \
+			--retry-all-errors \
+			-sS https://platform.guardsquare.com/cli/install.sh \
+			| sh -s -- --yes --bin-dir "$APPSWEEP_CLI_DIR"
+
+		if [ -d "$IOS_DSYMS_DIR_PATH" ]; then
+			DSYMS_FLAG="--dsym $IOS_DSYMS_DIR_PATH"
+		fi
+
+		url=$("$APPSWEEP_CLI_DIR/guardsquare" scan "$IOS_ARCHIVE_PATH" $DSYMS_FLAG --format '{{.URL}}')
+
+		echo "APPSWEEP_UPLOAD_URL=$url"
+		envman add --key APPSWEEP_UPLOAD_URL --value $url
+		exit 0
+	fi
+
+	echo "The iOS archive path at '$IOS_ARCHIVE_PATH' could not be found."
+	exit 1
+fi
+
+# Gradle/Android
 cd ${project_location}
 BUILD_FILE=./app/build.gradle
 
@@ -53,5 +81,5 @@ fi
 url=$(echo $output | grep -oP '(?<=Your scan results will be available at )[^ ]*' )
 
 envman add --key APPSWEEP_UPLOAD_URL --value $url
-echo "APPSWEEP_UPLOAD_URL="$url
+echo "APPSWEEP_UPLOAD_URL=$url"
 
