@@ -44,14 +44,14 @@ inputs:
     description: |
       AppSweep works with both, an IPA file or an xcarchive directory. This has to be set if you want to analyze iOS builds.
     is_required: false
-    title: iOS: The path of the iOS archive (IPA file or xcarchive directory)
+    title: The path of the iOS archive (IPA file or xcarchive directory)
     category: "iOS"
 - ios_dsyms_dir_path: $BITRISE_DSYM_DIR_PATH
   opts:
     description: |
       Should the archive not include debug symbols, it is possible to pass in the path to the dSYM directory explicitly. Lacking debug symbols prevents AppSweep from performing an in-depth analysis.
     is_required: false
-    title: iOS: The path of the dSYM directory.
+    title: The path of the dSYM directory.
     category: "iOS"
 - build_variant: release
   opts:
