@@ -1,16 +1,15 @@
 # Upload build to AppSweep
 
-The step uploads a release or debug build to [AppSweep](https://appsweep.guardsquare.com) for security scanning. It
-supports iOS and Android builds.
+The step uploads a release or debug build to [AppSweep](https://appsweep.guardsquare.com) for security scanning. Itsupports iOS and Android apps.
 
-For Android, the AppSweep Gradle plugin is used to upload your app. For iOS the, [Guardsquare CLI](https://appsweep.guardsquare.com/docs/ci/guardsquare-cli) is used for the upload.
+The AppSweep Gradle plugin is used to upload your Android app, while the [Guardsquare CLI](https://appsweep.guardsquare.com/docs/ci/guardsquare-cli) is used for iOS.
 
 ## How to use this Step
 
 You can also add this step directly to your workflow in the [Bitrise Workflow Editor](https://devcenter.bitrise.io/steps-and-workflows/steps-and-workflows-index/).  
 Alternatively, you can run it with the [bitrise CLI](https://github.com/bitrise-io/bitrise).
 
-To use this app, the `APPSWEEP_API_KEY` variable must be passed. You can generate it in the API Keys section of your project settings on the [AppSweep website](https://appsweep.guardsquare.com/) . This key **SHOULD NOT** be checked into your repository, but set up as a [Bitrise Secret](https://devcenter.bitrise.io/en/builds/secrets.html).
+The `APPSWEEP_API_KEY` variable must be set. You can generate it in the API Keys section of your project settings on the [AppSweep website](https://appsweep.guardsquare.com/) . This key **SHOULD NOT** be checked into your repository, but set up as a [Bitrise Secret](https://devcenter.bitrise.io/en/builds/secrets.html).
 
 See below for the platform-specific configuration.
 
