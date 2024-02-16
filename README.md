@@ -1,6 +1,6 @@
 # Upload build to AppSweep
 
-The Step runs uploads a release or debug build to [AppSweep](https://appsweep.guardsquare.com) for security scanning. It
+The step uploads a release or debug build to [AppSweep](https://appsweep.guardsquare.com) for security scanning. It
 supports iOS and Android builds.
 
 For Android, the AppSweep Gradle plugin is used to upload your app. For iOS the, [Guardsquare CLI](https://appsweep.guardsquare.com/docs/ci/guardsquare-cli) is used for the upload.
@@ -16,7 +16,7 @@ See below for the platform-specific configuration.
 
 ### Android
 
-To use this Step, you need:
+To use this step, you need:
 
 * A [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) in your project. It is expected in the root folder.
 * The Gradle AppSweep plugin. If you have a common folder structre (in particular `./app/build.gradle` is your app's gradle file) then the plugin will be injected automatically. Otherwise you need to add the AppSweep plugin manually, by adding `id "com.guardsquare.appsweep" version "latest.release"` to the plugin section of your app's build.gradle script.
@@ -24,7 +24,9 @@ To use this Step, you need:
 
 ### iOS
 
-To configure in the path of your build, set either the path to the `.ipa` (`$BITRISE_IPA_PATH`) file or to the `xcarchive` directory (`$BITRISE_XCARCHIVE_PATH`, default value). Optionally, it is possible to set the path to the dSYM directory. This is useful if the archive does not contain debug information and you want AppSweep to perform in-depth analysis.
+Add this step after the build phase and the archive will be uploaded. No further configuration is needed when using the default bitrise build steps. 
+
+If necessary, you can override the parameters of the step. In this case, make sure that the path to the debug symbols is set correctly to obtain detailed analysis results.
 
 ## Configuration
 
