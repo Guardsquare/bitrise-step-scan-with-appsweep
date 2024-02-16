@@ -39,32 +39,37 @@ inputs:
     is_required: true
     is_sensitive: true
     title: AppSweep API key
-- ios_archive_path:
+- ios_archive_path: $BITRISE_XCARCHIVE_PATH
   opts:
     description: |
-      AppSweep works both with an IPA file or an xcarchive directory. If you want to analyze iOS builds, this has to be set.
+      AppSweep works with both, an IPA file or an xcarchive directory. This has to be set if you want to analyze iOS builds.
     is_required: false
     title: iOS: The path of the iOS archive (IPA file or xcarchive directory)
-- ios_dsyms_dir_path:
+    category: "iOS"
+- ios_dsyms_dir_path: $BITRISE_DSYM_DIR_PATH
   opts:
     description: |
       Should the archive not include debug symbols, it is possible to pass in the path to the dSYM directory explicitly. Lacking debug symbols prevents AppSweep from performing an in-depth analysis.
     is_required: false
     title: iOS: The path of the dSYM directory.
+    category: "iOS"
 - build_variant: release
   opts:
     description: |
       Set to `debug` to upload the debug version of your app, or to `release` to upload the release version.
     is_required: false
-    title: Android: Select the build variant which should be uploaded
+    title: Select the build variant which should be uploaded
+    category: "Android"
     value_options:
     - debug
     - release
-- opts:
+- project_location: $PROJECT_LOCATION
+  opts:
     description: |
       Set this to the location of your project inside your repository. Inside this directory, the build file should be `./app/build.gradle` and `gradlew` should be directly in the `project_location`.
     is_required: false
-    title: Android: Project file path
+    title: Project file path
+    category: "Android"
   project_location: $PROJECT_LOCATION
 - gradle_plugin_version: 1.0.0
   opts:
@@ -72,6 +77,7 @@ inputs:
       The version of AppSweep gradle plugin. Can be set to particular numerical value or to `latest.release`, which requires at least Gradle 7.
     is_required: true
     title: AppSweep gradle plugin version
+    category: "Android"
 outputs:
 - APPSWEEP_UPLOAD_URL: null
   opts:
