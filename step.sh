@@ -78,7 +78,7 @@ else
     output=$($GRADLEW uploadToAppSweepRelease)
 fi
 
-url=$(echo $output | grep -oP '(?<=Your scan results will be available at )[^ ]*' )
+url=$(echo $output | grep 'Your scan results will be available at' | sed 's/.*Your scan results will be available at //')
 
 envman add --key APPSWEEP_UPLOAD_URL --value $url
 echo "APPSWEEP_UPLOAD_URL=$url"
