@@ -56,13 +56,10 @@ inputs:
 - build_variant: release
   opts:
     description: |
-      Set to `debug` to upload the debug version of your app, or to `release` to upload the release version.
+      Set to the desired build variant, e.g. `debug`. By default, the `release` variant will be uploaded.
     is_required: false
     title: Select the build variant which should be uploaded
     category: "Android"
-    value_options:
-    - debug
-    - release
 - project_location: $PROJECT_LOCATION
   opts:
     description: |
@@ -70,7 +67,6 @@ inputs:
     is_required: false
     title: Project file path
     category: "Android"
-  project_location: $PROJECT_LOCATION
 - gradle_plugin_version: 1.0.0
   opts:
     description: |
