@@ -71,11 +71,16 @@ else
 	echo "The gradlew wrapper was not found. Please provide the correct project_location."
 	exit 1
 fi
-if [ "${build_variant}" = "debug" ]
+
+basename="uploadToAppSweep"
+if [ -z "${build_variant+x}" ];
 then
-	output=$($GRADLEW uploadToAppSweepDebug)
+  # Build variant absent, we default to release
+  output=$($GRADLEW "${basename}Release")
 else
-    output=$($GRADLEW uploadToAppSweepRelease)
+  # Capitalize first letter of variant name, concatenate with Gradle task basename
+  capitalized="$(echo ${build_variant} | awk '{print toupper(substr($0, 1, 1)) substr($0, 2)}')"
+  output=$($GRADLEW "$basename$capitalized")
 fi
 
 url=$(echo $output | grep 'Your scan results will be available at' | sed 's/.*Your scan results will be available at //')
