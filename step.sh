@@ -78,6 +78,7 @@ then
   # Build variant absent, we default to release
   output=$($GRADLEW "${basename}Release")
 else
+  # Capitalize first letter of variant name, concatenate with Gradle task basename
   capitalized="$(echo ${build_variant} | awk '{print toupper(substr($0, 1, 1)) substr($0, 2)}')"
   output=$($GRADLEW "$basename$capitalized")
 fi
