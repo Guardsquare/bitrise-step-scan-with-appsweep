@@ -73,7 +73,7 @@ else
 fi
 
 basename="uploadToAppSweep"
-if [ -z "${build_variant+x}" ];
+if [ -z "${build_variant}" ];
 then
   # Build variant absent, we default to release
   output=$($GRADLEW "${basename}Release")
