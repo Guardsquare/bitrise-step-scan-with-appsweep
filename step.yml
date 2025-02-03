@@ -1,6 +1,7 @@
 title: AppSweep Mobile Security Testing
 summary: Scan your app using Guardsquare's mobile application security testing tool AppSweep
-description: "The build of your app is automatically uploaded to [AppSweep](https://appsweep.guardsquare.com)
+description: "The build of your Android or iOS app is automatically uploaded to 
+  [AppSweep](https://appsweep.guardsquare.com)
   for scanning. \n\nAppSweep is Guardsquare's free tool enabling developers to put
   mobile security at the forefront of app development. AppSweep helps you identify
   and fix security issues in your code and dependencies with actionable recommendations
@@ -8,43 +9,51 @@ description: "The build of your app is automatically uploaded to [AppSweep](http
 website: https://www.guardsquare.com/appsweep-mobile-application-security-testing
 source_code_url: https://github.com/Guardsquare/bitrise-step-scan-with-appsweep
 support_url: https://github.com/Guardsquare/bitrise-step-scan-with-appsweep/issues
-published_at: 2022-01-19T13:15:42.006047158+01:00
-source:
-  git: https://github.com/Guardsquare/bitrise-step-scan-with-appsweep.git
-  commit: 74d0913911c69563ddb08b86887fbbce721c1745
+
 host_os_tags:
 - osx-10.10
 - ubuntu-16.04
+
 project_type_tags:
 - android
 - ios
+
 type_tags:
 - test
+
 toolkit:
   bash:
     entry_file: step.sh
+
 deps:
   apt_get:
   - name: curl
   brew:
   - name: curl
+
 is_requires_admin_user: false
 is_always_run: false
 is_skippable: true
+
 inputs:
 - appsweep_api_key: $APPSWEEP_API_KEY
   opts:
     description: |
-      An `APPSWEEP_API_KEY` must be set to allow scanning of the app inside an AppSweep project. You can generate it in the API Keys section of your project settings.
+      An `APPSWEEP_API_KEY` must be set to allow scanning of the app inside an AppSweep project. You can generate it in the API Keys section of your app settings inside AppSweep.
     is_required: true
     is_sensitive: true
     title: AppSweep API key
+- commit_hash: $GIT_CLONE_COMMIT_HASH
+  opts:
+    description: |
+      The commit for this build. This commit will be associated with the app scan.
+    title: Git commit hash
 - ios_archive_path: $BITRISE_XCARCHIVE_PATH
   opts:
     description: |
       AppSweep works with both, an IPA file or an xcarchive directory. This has to be set if you want to analyze iOS builds.
     is_required: false
-    title: The path of the iOS archive (IPA file or xcarchive directory)
+    title: The path of the iOS archive
     category: "iOS"
 - ios_dsyms_dir_path: $BITRISE_DSYM_DIR_PATH
   opts:
@@ -53,26 +62,25 @@ inputs:
     is_required: false
     title: The path of the dSYM directory.
     category: "iOS"
-- build_variant: release
+- android_app_path: $BITRISE_APK_PATH
   opts:
     description: |
-      Set to the desired build variant, e.g. `debug`. By default, the `release` variant will be uploaded.
+      Path name to the built app. Can be an Android apk / aab.
     is_required: false
-    title: Select the build variant which should be uploaded
+    title: The path of the Android app
+- android_mappingfile_path:
+  opts:
+    description: |
+      Path to the obfuscation mapping file. E.g., ./app/build/outputs/mapping/debug/mapping.txt
+    is_required: false
+    title: The path to the obfuscation mapping file 
     category: "Android"
-- project_location: $PROJECT_LOCATION
+- android_project_location: $PROJECT_LOCATION
   opts:
     description: |
       Set this to the location of your project inside your repository. Inside this directory, the build file should be `./app/build.gradle` and `gradlew` should be directly in the `project_location`.
     is_required: false
     title: Project file path
-    category: "Android"
-- gradle_plugin_version: 1.0.0
-  opts:
-    description: |
-      The version of AppSweep gradle plugin. Can be set to particular numerical value or to `latest.release`, which requires at least Gradle 7.
-    is_required: true
-    title: AppSweep gradle plugin version
     category: "Android"
 outputs:
 - APPSWEEP_UPLOAD_URL: null
