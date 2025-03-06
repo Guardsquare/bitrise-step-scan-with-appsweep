@@ -40,6 +40,7 @@ inputs:
   opts:
     description: |
       An `APPSWEEP_API_KEY` must be set to allow scanning of the app inside an AppSweep project. You can generate it in the API Keys section of your app settings inside AppSweep.
+    summary: The AppSweep API key to use for the scan.
     is_required: true
     is_sensitive: true
     title: AppSweep API key
@@ -47,11 +48,13 @@ inputs:
   opts:
     description: |
       The commit for this build. This commit will be associated with the app scan.
+    summary: The commit hash to show in AppSweep for the scan.
     title: Git commit hash
 - ios_archive_path: $BITRISE_XCARCHIVE_PATH
   opts:
     description: |
       AppSweep works with both, an IPA file or an xcarchive directory. This has to be set if you want to analyze iOS builds.
+    summary: The iOS app (IPA or xcarchive file) to scan.
     is_required: false
     title: The path of the iOS archive
     category: "iOS"
@@ -59,6 +62,7 @@ inputs:
   opts:
     description: |
       Should the archive not include debug symbols, it is possible to pass in the path to the dSYM directory explicitly. Lacking debug symbols prevents AppSweep from performing an in-depth analysis.
+    summary: The path to the directory of additional dSYM files to use.
     is_required: false
     title: The path of the dSYM directory.
     category: "iOS"
@@ -66,12 +70,15 @@ inputs:
   opts:
     description: |
       Path name to the built app. Can be an Android apk / aab.
+    summary: The Android app (apk or aab file) to scan.
     is_required: false
     title: The path of the Android app
+    category: "Android"
 - android_mappingfile_path:
   opts:
     description: |
       Path to the obfuscation mapping file. E.g., ./app/build/outputs/mapping/debug/mapping.txt
+    summary: The path to the obfuscation mapping file.
     is_required: false
     title: The path to the obfuscation mapping file 
     category: "Android"
@@ -79,6 +86,7 @@ inputs:
   opts:
     description: |
       Set this to the location of your project inside your repository. Inside this directory, the build file should be `./app/build.gradle` and `gradlew` should be directly in the `project_location`.
+    summary: The file path to your project inside your repository.
     is_required: false
     title: Project file path
     category: "Android"
