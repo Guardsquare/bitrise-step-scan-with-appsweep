@@ -68,6 +68,7 @@ inputs:
       Path name to the built app. Can be an Android apk / aab.
     is_required: false
     title: The path of the Android app
+    category: "Android"
 - android_mappingfile_path:
   opts:
     description: |
