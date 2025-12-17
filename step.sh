@@ -8,10 +8,12 @@ if [ -z "$APP_PATH" ]; then
 	APP_PATH=${ios_archive_path}
 fi
 
-if [ -z "$APPSWEEP_API_KEY" ]
-then
-	echo "Required input APPSWEEP_API_KEY is empty"	
-	exit 1
+if [ -z $APPSWEEP_API_KEY ]; then
+	echo "Using ssh-agent to authenticate"
+	SSH_AGENT_ARG="--ssh-agent "
+else
+	echo "Using API key to authenticate"
+	SSH_AGENT_ARG=""
 fi
 
 if [ -e  "$APP_PATH" ] ; then
@@ -35,7 +37,7 @@ if [ -e  "$APP_PATH" ] ; then
 		PROJECTDIR_FLAG="--project-dir ${android_project_location}"
 	fi
 
-	url=$($APPSWEEP_CLI_DIR/guardsquare scan $APP_PATH $DSYMS_FLAG $MAPPING_FLAG $COMMIT_FLAG $PROJECTDIR_FLAG --format '{{.URL}}')
+	url=$($APPSWEEP_CLI_DIR/guardsquare scan $APP_PATH $DSYMS_FLAG $SSH_AGENT_ARG $MAPPING_FLAG $COMMIT_FLAG $PROJECTDIR_FLAG --format '{{.URL}}')
 
 	echo "You can view your scan results at $url"
 	envman add --key APPSWEEP_UPLOAD_URL --value $url

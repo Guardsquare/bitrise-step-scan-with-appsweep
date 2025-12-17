@@ -39,9 +39,8 @@ inputs:
 - appsweep_api_key: $APPSWEEP_API_KEY
   opts:
     description: |
-      An `APPSWEEP_API_KEY` must be set to allow scanning of the app inside an AppSweep project. You can generate it in the API Keys section of your app settings inside AppSweep.
-    summary: The AppSweep API key to use for the scan.
-    is_required: true
+      An `APPSWEEP_API_KEY` can be set to authenticate and associate an AppSweep app. You can generate it in the API Keys section of your app settings inside AppSweep. If this is not set, ssh-agent authentication needs to be enable
+    summary: The AppSweep API key to use for the scan. Alternatively, you can configure ssh-agent authentication which will then be picked up automatically.
     is_sensitive: true
     title: AppSweep API key
 - commit_hash: $GIT_CLONE_COMMIT_HASH
